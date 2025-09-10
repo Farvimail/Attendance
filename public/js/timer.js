@@ -121,7 +121,14 @@ function Interval(variable, dateString, target, paused)
     {
         // Get today's date and time
         /*var now = new Date().getTime();*/
-        let now = Date.now();
+        // زمان UTC بر حسب میلی‌ثانیه
+        let utc = Date.now();
+
+        // آفست تهران: 3:30 ساعت جلوتر از UTC
+        let tehranOffset = 3.5 * 60 * 60 * 1000;
+
+        // حالا زمان تهران
+        let now = utc + tehranOffset;
 
         // Find the distance between now and the count down date
         var distance = paused?dateString:now-dateString;
