@@ -182,7 +182,7 @@ function finishTime(body)
 {
     return {
         body: body,
-        icon: "http://localhost/public/images/arm.jpg",
+        icon: "/images/arm.jpg",
         image: "https://th.bing.com/th/id/OIP.fVzdKE2EPZzB5PiI1pvaFQHaHa?pid=ImgDet&rs=1",
         silent: false,
     }
@@ -194,7 +194,7 @@ function finishTime(body)
 function runTimer(id)
 {
     $.ajax({
-        url: "http://localhost/public/read/timer",
+        url: "/read/timer",
         method: 'get',
         data: {
             _token: $('meta[name="csrf-token"]').attr('content'),
@@ -342,7 +342,7 @@ function runTimer(id)
             id = id.substring(id.lastIndexOf('n')+1);
 
             $.ajax({
-                url: 'http://localhost/public/delete/ajax',
+                url: '/delete/ajax',
                 method: 'GET',
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
