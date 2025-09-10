@@ -117,41 +117,45 @@ function e2p(n) {
 
 function Interval(variable, dateString, target, paused) {
     function CustomerTimer() {
-        // زمان فعلی تهران (UTC + 3:30)
-        let now = Date.now() + 3.5 * 60 * 60 * 1000;
+        // زمان UTC فعلی
+        let now = Date.now();
+
+        // آفست ثابت تهران
+        let tehranOffset = 3.5 * 60 * 60 * 1000;
+
+        // جبران اختلاف ساعت تلویزیون (برای دستگاه‌هایی که یک ساعت جلو هستن)
+        let tvCorrection = -1 * 60 * 60 * 1000; // یک ساعت عقب
+
+        // زمان نهایی تهران با تصحیح تلویزیون
+        now = now + tehranOffset + tvCorrection;
 
         // فاصله تا تاریخ هدف
         var distance = paused ? dateString : now - dateString;
 
-        // اگر تایمر تمام شده
         if (distance < 0) {
             clearInterval(variable);
             document.querySelector(target).innerHTML = "EXPIRED";
             return;
         }
 
-        // محاسبه ساعت، دقیقه، ثانیه
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // اضافه کردن صفر جلو اعداد تک رقمی
         hours < 10 ? hours = "0" + hours : null;
         minutes < 10 ? minutes = "0" + minutes : null;
         seconds < 10 ? seconds = "0" + seconds : null;
 
-        // نمایش نتیجه
         let res = hours + " : " + minutes + "' : " + seconds + '"';
         document.querySelector(target).innerHTML = e2p(res);
     }
 
-    // اجرای فوری برای جلوگیری از تاخیر ۱ ثانیه
     CustomerTimer();
 
-    // شروع به‌روزرسانی هر ۱ ثانیه، اگر تایمر Paused نباشد
     if (!paused)
         eval(variable + ' = setInterval(CustomerTimer, 1000)');
 }
+
 
 
 function timerStatus(array)
