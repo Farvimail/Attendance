@@ -115,17 +115,20 @@ function e2p(n) {
         .replace(/\d/g, x => farsiDigits[x]);
 }
 
-function Interval(variable, targetDate, targetElement, paused) {
+function Interval(variable, dateString, target, paused) {
     function CustomerTimer() {
-        let nowUTC = Date.now(); // زمان فعلی UTC
-        let targetUTC = targetDate; // تاریخ هدف به timestamp UTC
+        // زمان فعلی UTC
+        let nowUTC = Date.now();
 
-        // فاصله تا تاریخ هدف (میلی‌ثانیه)
+        // تبدیل dateString به timestamp UTC
+        let targetUTC = new Date(dateString).getTime();
+
+        // فاصله تا تاریخ هدف
         let distance = paused ? targetUTC : targetUTC - nowUTC;
 
         if (distance < 0) {
             clearInterval(variable);
-            document.querySelector(targetElement).innerHTML = "EXPIRED";
+            document.querySelector(target).innerHTML = "EXPIRED";
             return;
         }
 
@@ -139,13 +142,14 @@ function Interval(variable, targetDate, targetElement, paused) {
         seconds < 10 ? seconds = "0" + seconds : null;
 
         let res = hours + " : " + minutes + "' : " + seconds + '"';
-        document.querySelector(targetElement).innerHTML = e2p(res);
+        document.querySelector(target).innerHTML = e2p(res);
     }
 
     CustomerTimer();
     if (!paused)
         eval(variable + ' = setInterval(CustomerTimer, 1000)');
 }
+
 
 
 
