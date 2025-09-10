@@ -133,11 +133,11 @@ function Interval(variable, dateString, target, paused)
             second: "2-digit"
         });
 
-// تبدیل به timestamp
         let parts = formatter.formatToParts(new Date());
         let now = new Date(
-            `${parts.find(p => p.type === "year").value}-${parts.find(p => p.type === "month").value}-${parts.find(p => p.type === "day").value}T${parts.find(p => p.type === "hour").value}:${parts.find(p => p.type === "minute").value}:${parts.find(p => p.type === "second").value}+03:30`
+            `${parts.find(p => p.type === "year").value}-${parts.find(p => p.type === "month").value}-${parts.find(p => p.type === "day").value}T${parts.find(p => p.type === "hour").value}:${parts.find(p => p.type === "minute").value}:${parts.find(p => p.type === "second").value}`
         ).getTime();
+
 
 
         // Find the distance between now and the count down date
