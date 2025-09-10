@@ -9,7 +9,7 @@ use App\Http\Controllers\FunctionsController;
 @extends('layouts.auth')
 
 @section('title')
-تقویم فعالیت سال 
+تقویم فعالیت سال
 {{$year}}
 {{$customer->name}}
 @endsection
@@ -28,25 +28,25 @@ use App\Http\Controllers\FunctionsController;
                 <div class="card">
                     <div class="card-header text-center" id="calendars">
                         @if(\App\Http\Controllers\PhotoController::show($customer_id)->exists())
-                            <?php 
-                                $pre = "http://localhost/public/images/users/";
+                            <?php
+                                $pre = "http://localhost/images/users/";
                                 $customer_profile = \App\Http\Controllers\PhotoController::show($customer_id)->orderBy('tbl_users_profile.id','desc')->first()->name;
                                 $src = $pre.$customer_profile;
                             ?>
-                            <img style="{ border-radius: 25px; padding: 3px; border: solid 3px gray; }" 
+                            <img style="{ border-radius: 25px; padding: 3px; border: solid 3px gray; }"
                                 src="{{$src}}"
                                 width="125px" height="125px"
                                 alt="{{$customer->name}}">
                         @else
-                            <img style="{ border-radius: 25px; padding: 3px; border: solid 3px gray; }" 
-                                src="{{asset('images/users/PRP.jpg')}}" 
+                            <img style="{ border-radius: 25px; padding: 3px; border: solid 3px gray; }"
+                                src="{{asset('images/users/PRP.jpg')}}"
                                 width="125px" height="125px"
                                 alt="{{$customer->name}}">
                         @endif
                         <p>
                             <h4>
-                                تقویم فعالیت سال 
-                                {{FunctionsController::e2p($year)}}   
+                                تقویم فعالیت سال
+                                {{FunctionsController::e2p($year)}}
                                هـ . ش
                             </h4>
                             <h4>
@@ -57,8 +57,8 @@ use App\Http\Controllers\FunctionsController;
 
                     <div class="card-body">
                         <div class="activity_months" style="display: flex;">
-                        
-                        <?php 
+
+                        <?php
                             $year_presents = 0;
                             $year_absents = 0;
                             $year_special = 0;
@@ -185,7 +185,7 @@ use App\Http\Controllers\FunctionsController;
                                     </div>
 
                                 </div>
-                                <?php 
+                                <?php
                                     $year_presents += $presents;
                                     $year_absents += $absents;
                                     $year_special += $special;
@@ -206,7 +206,7 @@ use App\Http\Controllers\FunctionsController;
                                 دارای
                                 <button type="button" class="btn btn-primary">
                                     {{FunctionsController::e2p($year_presents)}}
-                                    حضور  
+                                    حضور
                                     <span class="badge bg-secondary" style="direction:ltr">{{FunctionsController::e2p(\App\Http\Controllers\SalaryController::sumYearParts($year_normal_time))." ساعت "}}</span>
                                 </button>
                                 <button type="button" class="btn btn-danger">
@@ -220,8 +220,8 @@ use App\Http\Controllers\FunctionsController;
                                     <span class="badge bg-secondary" style="direction:ltr">{{FunctionsController::e2p(\App\Http\Controllers\SalaryController::sumYearParts($year_extra_time))." ساعت "}}</span>
                                 </button>
                                 در
-                                تقویم 
-                                سال 
+                                تقویم
+                                سال
                                 جاری
                                 خود
                                 است.
@@ -230,13 +230,13 @@ use App\Http\Controllers\FunctionsController;
                         <p>
                             <h4>
                                 مجموع فعالیت سال
-                                {{FunctionsController::e2p($year)}}   
-                                هـ . ش   
+                                {{FunctionsController::e2p($year)}}
+                                هـ . ش
                                 <strong><u>
                                 {{FunctionsController::e2p(number_format($year_salary))}}
                                 </u></strong>
                                 ریال
-                                میباشد 
+                                میباشد
                             </h4>
                         </p>
                         <p>
