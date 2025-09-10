@@ -115,46 +115,38 @@ function e2p(n) {
         .replace(/\d/g, x => farsiDigits[x]);
 }
 
-function Interval(variable, dateString, target, paused) {
+function Interval(variable, targetDate, targetElement, paused) {
     function CustomerTimer() {
-        // زمان UTC فعلی
-        let now = Date.now();
+        let nowUTC = Date.now(); // زمان فعلی UTC
+        let targetUTC = targetDate; // تاریخ هدف به timestamp UTC
 
-        // آفست ثابت تهران
-        let tehranOffset = 3.5 * 60 * 60 * 1000;
-
-        // جبران اختلاف ساعت تلویزیون (برای دستگاه‌هایی که یک ساعت جلو هستن)
-        let tvCorrection = -1 * 60 * 60 * 1000; // یک ساعت عقب
-
-        // زمان نهایی تهران با تصحیح تلویزیون
-        now = now + tehranOffset + tvCorrection;
-
-        // فاصله تا تاریخ هدف
-        var distance = paused ? dateString : now - dateString;
+        // فاصله تا تاریخ هدف (میلی‌ثانیه)
+        let distance = paused ? targetUTC : targetUTC - nowUTC;
 
         if (distance < 0) {
             clearInterval(variable);
-            document.querySelector(target).innerHTML = "EXPIRED";
+            document.querySelector(targetElement).innerHTML = "EXPIRED";
             return;
         }
 
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // محاسبه ساعت، دقیقه، ثانیه
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         hours < 10 ? hours = "0" + hours : null;
         minutes < 10 ? minutes = "0" + minutes : null;
         seconds < 10 ? seconds = "0" + seconds : null;
 
         let res = hours + " : " + minutes + "' : " + seconds + '"';
-        document.querySelector(target).innerHTML = e2p(res);
+        document.querySelector(targetElement).innerHTML = e2p(res);
     }
 
     CustomerTimer();
-
     if (!paused)
         eval(variable + ' = setInterval(CustomerTimer, 1000)');
 }
+
 
 
 
