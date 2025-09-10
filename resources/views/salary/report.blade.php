@@ -9,7 +9,7 @@
                         <h5><strong><input type="text" value="تاریخ گزارش: 01/01/1400" style="border:none;font-weight: bold; width:250px; text-align:right;"/></strong></h5>
                     </div>
                     <div class="col-md-6">
-                        <img src="/public/images/logo/arm.jpg" class="fish-logo" width="100px" height="100px" />
+                        <img src="/logo/arm.jpg" class="fish-logo" width="100px" height="100px" />
                         <h5><strong><input type="text" value="شرکت برنامه نویسی غفاری شهر خور" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>
                         <h5><strong><input type="text" value="گزارش ماهانه فعالیت مصطفی غفاری" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>
                         <h5><strong><input type="text" value="اسفند 99" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>
