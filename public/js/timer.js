@@ -115,39 +115,56 @@ function e2p(n) {
         .replace(/\d/g, x => farsiDigits[x]);
 }
 
-function Interval(variable, dateString, target, paused) {
-    function CustomerTimer() {
-        // زمان فعلی UTC
-        let nowUTC = Date.now();
+function Interval(variable, dateString, target, paused)
+{
+    function CustomerTimer()
+    {
+        // Get today's date and time
+        /*var now = new Date().getTime();*/
+        let date = new Date;
+        let logicalTime = date.toLocaleString("en-US", {
+            timeZone: `Asia/Tehran`
+        });
+        let now = new Date(logicalTime).getTime();
 
-        // تبدیل dateString به timestamp UTC
-        let targetUTC = new Date(dateString).getTime();
+        // Find the distance between now and the count down date
+        var distance = paused?dateString:now-dateString;
 
-        // فاصله تا تاریخ هدف
-        let distance = paused ? targetUTC : targetUTC - nowUTC;
-
+        // If the count down is finished, write some text
         if (distance < 0) {
             clearInterval(variable);
             document.querySelector(target).innerHTML = "EXPIRED";
-            return;
         }
 
-        // محاسبه ساعت، دقیقه، ثانیه
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Time calculations for days, hours, minutes and seconds
+        /*var days = Math.floor(distance / (1000 * 60 * 60 * 24));*/
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        hours < 10 ? hours = "0" + hours : null;
-        minutes < 10 ? minutes = "0" + minutes : null;
-        seconds < 10 ? seconds = "0" + seconds : null;
+        // make binary number mode for display
+        /*days < 10 ? days = "0"+days : null;*/
+        hours < 10 ? hours = "0"+hours : null;
+        minutes < 10 ? minutes = "0"+minutes : null;
+        seconds < 10 ? seconds = "0"+seconds : null;
 
-        let res = hours + " : " + minutes + "' : " + seconds + '"';
-        document.querySelector(target).innerHTML = e2p(res);
+        /*if ( hours == 4 && minutes == 01)
+        {
+
+        }*/
+
+        // Display the result in the element with id="demo"
+        let res = (  hours + " : " + minutes + "' : " + seconds + '"');
+        document.querySelector(target)
+            .innerHTML = e2p(res);
+
     }
 
     CustomerTimer();
-    if (!paused)
-        eval(variable + ' = setInterval(CustomerTimer, 1000)');
+    // Update the count down every 1 second
+    if ( !paused )
+        eval(variable+' = setInterval(CustomerTimer, 1000)');
+
 }
 
 
