@@ -15,7 +15,7 @@
                         <h5><strong><input type="text" value="{{\App\Http\Controllers\FunctionsController::e2p("کد ثبت: 23")}}" style="border:none;font-weight: bold; width:250px"/></strong></h5>
                     </div>
                     <div class="col-md-6">
-                        <a href="/public/manager"><img src="/logo/arm.jpg" class="fish-logo" width="100px" height="100px" /></a>
+                        <a href="/public/manager"><img src="/public/images/logo/arm.jpg" class="fish-logo" width="100px" height="100px" /></a>
                         <h5><strong><input type="text" value="شرکت برنامه نویسی غفاری شهر خور" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>
                         <h5><strong><input type="text" value=" صورت وضعیت پرداخت حقوق و دستمزد کارکنان" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>
                         <h5><strong><input type="text" value="فیش حقوقی {{$fish_month}} {{\App\Http\Controllers\FunctionsController::e2p(explode("/",$find_today->fa_date)[2]%10000)}}" style="text-align:center; border:none;font-weight: bold; width:450px;"/></strong></h5>

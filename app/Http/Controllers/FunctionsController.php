@@ -295,25 +295,25 @@ class FunctionsController extends Controller
             /*** check exist then create new file name*/
             do {
                 $name = sha1(time()) . '.' . $ext;
-            } while (file_exists($_SERVER['DOCUMENT_ROOT'] . '/users/' . $name));
+            } while (file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name));
 
             do {
                 $name2 = sha1(time()).sha1(time()) . '.' . $ext;
-            } while (file_exists($_SERVER['DOCUMENT_ROOT'] . '/users/' . $name2));
+            } while (file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name2));
             /*** end check and create new file name*/
 
             /*** destination file ***/
-            $location = $_SERVER['DOCUMENT_ROOT'] . '/users/' . $name;
+            $location = $_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name;
 
             move_uploaded_file($request->file('file')->getPathName(), $location);
 
             if (strtolower(end($test)) == 'jpg' ||
                 strtolower(end($test)) == 'jpeg') {
 
-                self::GenerateThumbnail($_SERVER['DOCUMENT_ROOT'] . '/users/' . $name, $_SERVER['DOCUMENT_ROOT'] . '/users/' . $name2, 900, 900, $quality = 1);
+                self::GenerateThumbnail($_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name, $_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name2, 900, 900, $quality = 1);
             } else {
 
-                self::GenerateThumbnailNormal($_SERVER['DOCUMENT_ROOT'] . '/users/' . $name, $_SERVER['DOCUMENT_ROOT'] . '/users/' . $name2, 900, 900, $quality = 1);
+                self::GenerateThumbnailNormal($_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name, $_SERVER['DOCUMENT_ROOT'] . '/public/images/users/' . $name2, 900, 900, $quality = 1);
             }
 
             PhotoController::store($name2, $location, $request->cid);

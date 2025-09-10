@@ -4,7 +4,7 @@ body{
 }
 
 body::before {
-    background:url("/background/programming-developers-vector.avif");
+    background:url("/public/images/background/programming-developers-vector.avif");
     opacity: 0.125;
     width:100%;
     height:100%;
