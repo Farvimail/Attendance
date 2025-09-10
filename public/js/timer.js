@@ -115,70 +115,44 @@ function e2p(n) {
         .replace(/\d/g, x => farsiDigits[x]);
 }
 
-function Interval(variable, dateString, target, paused)
-{
-    function CustomerTimer()
-    {
-        // Get today's date and time
-        /*var now = new Date().getTime();*/
-        // زمان UTC بر حسب میلی‌ثانیه
-        let formatter = new Intl.DateTimeFormat("en-US", {
-            timeZone: "Asia/Tehran",
-            hour12: false,
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
+function Interval(variable, dateString, target, paused) {
+    function CustomerTimer() {
+        // زمان فعلی تهران (UTC + 3:30)
+        let now = Date.now() + 3.5 * 60 * 60 * 1000;
 
-        let parts = formatter.formatToParts(new Date());
-        let now = new Date(
-            `${parts.find(p => p.type === "year").value}-${parts.find(p => p.type === "month").value}-${parts.find(p => p.type === "day").value}T${parts.find(p => p.type === "hour").value}:${parts.find(p => p.type === "minute").value}:${parts.find(p => p.type === "second").value}`
-        ).getTime();
+        // فاصله تا تاریخ هدف
+        var distance = paused ? dateString : now - dateString;
 
-
-
-        // Find the distance between now and the count down date
-        var distance = paused?dateString:now-dateString;
-
-        // If the count down is finished, write some text
+        // اگر تایمر تمام شده
         if (distance < 0) {
             clearInterval(variable);
             document.querySelector(target).innerHTML = "EXPIRED";
+            return;
         }
 
-        // Time calculations for days, hours, minutes and seconds
-        /*var days = Math.floor(distance / (1000 * 60 * 60 * 24));*/
+        // محاسبه ساعت، دقیقه، ثانیه
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // make binary number mode for display
-        /*days < 10 ? days = "0"+days : null;*/
-        hours < 10 ? hours = "0"+hours : null;
-        minutes < 10 ? minutes = "0"+minutes : null;
-        seconds < 10 ? seconds = "0"+seconds : null;
+        // اضافه کردن صفر جلو اعداد تک رقمی
+        hours < 10 ? hours = "0" + hours : null;
+        minutes < 10 ? minutes = "0" + minutes : null;
+        seconds < 10 ? seconds = "0" + seconds : null;
 
-        /*if ( hours == 4 && minutes == 01)
-        {
-
-        }*/
-
-        // Display the result in the element with id="demo"
-        let res = (  hours + " : " + minutes + "' : " + seconds + '"');
-        document.querySelector(target)
-            .innerHTML = e2p(res);
-
+        // نمایش نتیجه
+        let res = hours + " : " + minutes + "' : " + seconds + '"';
+        document.querySelector(target).innerHTML = e2p(res);
     }
 
+    // اجرای فوری برای جلوگیری از تاخیر ۱ ثانیه
     CustomerTimer();
-    // Update the count down every 1 second
-    if ( !paused )
-    eval(variable+' = setInterval(CustomerTimer, 1000)');
 
+    // شروع به‌روزرسانی هر ۱ ثانیه، اگر تایمر Paused نباشد
+    if (!paused)
+        eval(variable + ' = setInterval(CustomerTimer, 1000)');
 }
+
 
 function timerStatus(array)
 {
